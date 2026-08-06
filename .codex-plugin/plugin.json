@@ -1,7 +1,7 @@
 {
   "name": "signal-prospect-research",
-  "version": "0.1.0",
-  "description": "Turn an outbound idea into ranked target companies and likely buyers.",
+  "version": "0.2.0",
+  "description": "Turn outbound ideas and binary market signals into ranked target companies and likely buyers.",
   "author": {
     "name": "William Flanagan",
     "email": "wflanagan@audienti.com"
@@ -10,6 +10,8 @@
   "repository": "https://github.com/audienti/signal-research",
   "keywords": [
     "signal-research",
+    "serper",
+    "market-signals",
     "prospecting",
     "outbound",
     "account-research",
@@ -17,9 +19,9 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Signal Prospect Research",
-    "shortDescription": "Find target accounts and likely buyers from observable market signals.",
-    "longDescription": "Turn an offer and premise into explicit research signals, find companies showing public evidence that the problem is live, and identify the smallest credible buyer set for each account.",
+    "displayName": "Signal Research",
+    "shortDescription": "Find target accounts from observable signals, and turn public signal questions into ranked companies.",
+    "longDescription": "Turn an offer and premise into explicit research signals, or turn a yes-or-no market signal question into Serper-backed company discovery with domains and LinkedIn company URLs.",
     "developerName": "William Flanagan",
     "category": "Sales",
     "capabilities": [
@@ -28,7 +30,8 @@
     "defaultPrompt": [
       "Turn this offer into premise, signals, target companies, and likely buyers.",
       "Find companies showing public evidence that this problem is live.",
-      "Rank the best-fit accounts and identify the smallest credible buyer set."
+      "Given this signal question, find companies with public evidence that it is true.",
+      "Use Serper-backed search to find companies that recently merged or acquired assets and resolve their domains and LinkedIn company URLs."
     ],
     "brandColor": "#0F766E"
   }

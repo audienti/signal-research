@@ -1,7 +1,7 @@
 {
   "name": "signal-prospect-research",
-  "description": "Turn an outbound idea into ranked target companies and likely buyers.",
-  "version": "0.1.0",
+  "description": "Turn outbound ideas and binary market signals into ranked target companies and likely buyers.",
+  "version": "0.2.0",
   "author": {
     "name": "William Flanagan",
     "email": "wflanagan@audienti.com"
@@ -10,6 +10,8 @@
   "repository": "https://github.com/audienti/signal-research",
   "keywords": [
     "signal-research",
+    "serper",
+    "market-signals",
     "prospecting",
     "outbound",
     "account-research",

@@ -1,0 +1,129 @@
+{
+  "runner": "run_serper_search.py",
+  "baseUrl": "https://google.serper.dev",
+  "ranAt": "2026-06-18T15:30:00+00:00",
+  "authSource": "fixture",
+  "jobs": [
+    {
+      "id": "direct-news-1",
+      "label": "direct_news",
+      "query": "(acquires OR acquisition OR merger OR \"acquired assets\") after:2026-03-20",
+      "endpoint": "news",
+      "gl": "us",
+      "hl": "en",
+      "tbs": null,
+      "limit": 10,
+      "pageCountLimit": 1,
+      "pagesFetched": 1,
+      "resultCount": 3,
+      "creditsUsed": 1,
+      "pageSummaries": [
+        {
+          "page": 1,
+          "resultCount": 3,
+          "searchParameters": {
+            "q": "(acquires OR acquisition OR merger OR \"acquired assets\") after:2026-03-20",
+            "type": "news"
+          },
+          "credits": 1
+        }
+      ],
+      "results": [
+        {
+          "title": "Alpha Bank acquires Coastal Credit's motor finance portfolio",
+          "link": "https://www.prnewswire.com/news-releases/alpha-bank-acquires-coastal-credit-motor-finance-portfolio-302000001.html",
+          "snippet": "Alpha Bank said it acquired Coastal Credit's motor finance portfolio to expand its auto lending business.",
+          "date": "2 days ago",
+          "source": "PR Newswire",
+          "position": 1
+        },
+        {
+          "title": "NorthStar Fintech completes acquisition of LedgerRisk",
+          "link": "https://northstarfintech.com/news/northstar-fintech-completes-acquisition-of-ledgerrisk",
+          "snippet": "NorthStar Fintech completed its acquisition of LedgerRisk on Jun 15, 2026 and said it will unify underwriting and fraud operations.",
+          "date": "Jun 15, 2026",
+          "source": "NorthStar Fintech",
+          "position": 2
+        },
+        {
+          "title": "Why 2026 is shaping up as a big year for financial-services M&A",
+          "link": "https://www.reuters.com/world/us/why-2026-is-a-big-year-for-financial-services-ma/",
+          "snippet": "Banking executives expect more consolidation this year, but the trend piece does not name a target company.",
+          "date": "3 days ago",
+          "source": "Reuters",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "id": "company-resolution-1",
+      "label": "company_resolution",
+      "query": "\"NorthStar Fintech\" official site",
+      "endpoint": "search",
+      "gl": "us",
+      "hl": "en",
+      "tbs": null,
+      "limit": 5,
+      "pageCountLimit": 1,
+      "pagesFetched": 1,
+      "resultCount": 1,
+      "creditsUsed": 1,
+      "pageSummaries": [
+        {
+          "page": 1,
+          "resultCount": 1,
+          "searchParameters": {
+            "q": "\"NorthStar Fintech\" official site",
+            "type": "search"
+          },
+          "credits": 1
+        }
+      ],
+      "results": [
+        {
+          "title": "NorthStar Fintech | Embedded finance infrastructure",
+          "link": "https://northstarfintech.com",
+          "snippet": "Official site for NorthStar Fintech.",
+          "date": null,
+          "source": "NorthStar Fintech",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "id": "linkedin-resolution-1",
+      "label": "linkedin_resolution",
+      "query": "site:linkedin.com/company \"NorthStar Fintech\"",
+      "endpoint": "search",
+      "gl": "us",
+      "hl": "en",
+      "tbs": null,
+      "limit": 5,
+      "pageCountLimit": 1,
+      "pagesFetched": 1,
+      "resultCount": 1,
+      "creditsUsed": 1,
+      "pageSummaries": [
+        {
+          "page": 1,
+          "resultCount": 1,
+          "searchParameters": {
+            "q": "site:linkedin.com/company \"NorthStar Fintech\"",
+            "type": "search"
+          },
+          "credits": 1
+        }
+      ],
+      "results": [
+        {
+          "title": "NorthStar Fintech | LinkedIn",
+          "link": "https://www.linkedin.com/company/northstar-fintech/",
+          "snippet": "NorthStar Fintech on LinkedIn.",
+          "date": null,
+          "source": "LinkedIn",
+          "position": 1
+        }
+      ]
+    }
+  ]
+}
