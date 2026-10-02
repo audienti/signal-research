@@ -1,6 +1,10 @@
 # Signal Prospect Research
 
-Signal Prospect Research helps you turn an outbound idea into a ranked list of target companies and likely buyers.
+Signal Prospect Research is a free plugin for Claude Code and Codex. Tell it
+what you sell and why it matters, and it gives you back a ranked list of
+companies that show public signs of that problem right now, the person at each
+company most likely to care, and the sources behind each pick. Run it each week
+and you have a fresh target list built from evidence, not guesses.
 
 Instead of starting with a broad ICP guess, it helps an agent work from:
 
@@ -13,6 +17,46 @@ to:
 - which companies show those signals
 - which people at those companies are most likely to care
 - which sources support the recommendation
+
+Watch the tutorial: video coming soon.
+
+## Install
+
+The plugin is listed in the Audienti marketplace
+([audienti/plugins](https://github.com/audienti/plugins)) as
+`signal-prospect-research`. Add the marketplace once, then install the plugin.
+
+### Claude Code
+
+In a Claude Code session:
+
+```text
+/plugin marketplace add audienti/plugins
+/plugin install signal-prospect-research@audienti
+```
+
+Or from your terminal:
+
+```bash
+claude plugin marketplace add audienti/plugins
+claude plugin install signal-prospect-research@audienti
+```
+
+If the install says to check your access rights, run it again with
+`CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` set. That makes Claude Code download over
+HTTPS instead of SSH.
+
+### Codex
+
+From your terminal:
+
+```bash
+codex plugin marketplace add audienti/plugins
+codex plugin add signal-prospect-research@audienti
+```
+
+Or, after adding the marketplace, type `/plugins` inside Codex and install
+**signal-prospect-research** from the `audienti` marketplace.
 
 ## Best for
 
@@ -31,25 +75,29 @@ The plugin adds a research skill that:
 - identifies likely owners, operators, sponsors, or evaluators
 - returns a source-backed prospect brief with confidence and gaps
 
-## Codex requirements
+## You'll need
 
-This plugin ships a skill. It does not bundle its own MCP server or app connector.
-
-It works inside Codex by using the tools already available in the current run.
+This plugin ships a skill. It does not bundle its own MCP server or app
+connector. It uses the tools already available in your Claude Code or Codex
+session.
 
 ### Required
 
-- Codex plugin support with skill loading enabled
-- access to native web research in the current run
+- **Claude Code or Codex**, with plugins (skills) turned on.
+- **Web search** turned on in the session. Company research comes from
+  public web sources.
+- Your own model usage. The plugin runs on your Claude or Codex account.
 
-### Recommended
+### Optional (makes the people part stronger)
 
-- `Unipile`
-  for LinkedIn account discovery, LinkedIn search, and Sales Navigator people search
-- `Icypeas`
-  for LinkedIn company URL discovery, profile URL discovery, and bulk scraping
-- `Browser` or `Chrome`
-  when the task requires direct page inspection in LinkedIn or Sales Navigator
+- **Unipile**, connected as a tool, for LinkedIn account lookup, LinkedIn
+  search, and Sales Navigator people search.
+- **Icypeas**, connected as a tool, for finding LinkedIn company and profile
+  URLs and checking them in bulk.
+- **A browser tool** (Browser or Chrome), when you want it to look directly at
+  LinkedIn or Sales Navigator pages.
+
+These are third-party services with their own accounts and terms.
 
 ### What happens without them
 
@@ -110,6 +158,7 @@ If requested, it can also return JSON with these top-level keys:
 ## Repository contents
 
 - `.codex-plugin/plugin.json`: Codex plugin manifest
+- `.claude-plugin/plugin.json`: Claude Code plugin manifest
 - `skills/signal-prospect-research/SKILL.md`: main research skill
 - `skills/signal-prospect-research/references/`: output template, signal shape, and tool recipes
 
@@ -118,5 +167,5 @@ If requested, it can also return JSON with these top-level keys:
 Marketplace entries can reference this repository:
 
 ```text
-https://github.com/omalab/signal-prospect-research.git
+https://github.com/audienti/signal-research.git
 ```
