@@ -25,7 +25,7 @@ record mapping and score readback remain optional host behavior.
 Experiment reference, premise, company criteria, candidate roles, signal questions and resolved batch limits.
 
 ## Company
-Identity and sources. Each material company criterion: met, not met or unknown. Each signal: question, scope, yes/no/unknown, evidence, source URL, observation date and event date if known. Counterevidence and remaining fit gaps.
+Identity and sources. Each material company criterion: met, not met or unknown. Each signal: question, scope, true/false/null (unknown), evidence, source URL, observation date and event date if known. Counterevidence and remaining fit gaps.
 
 ## People
 Name, current employer, role and supporting evidence, known profile/contact URLs, relevant signal reference, why they might know, fit verdict, confidence and uncertainties. Separate verified title from a descriptive role label. Do not assign a buying role.
