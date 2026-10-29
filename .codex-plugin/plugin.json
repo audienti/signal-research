@@ -1,7 +1,7 @@
 {
   "name": "signal-prospect-research",
-  "version": "0.1.0",
-  "description": "Turn an outbound idea into ranked target companies and likely buyers.",
+  "version": "0.4.0",
+  "description": "Find sourced signals and relevant people, with separate company fit and minimal person research.",
   "author": {
     "name": "William Flanagan",
     "email": "wflanagan@audienti.com"
@@ -18,17 +18,15 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Signal Prospect Research",
-    "shortDescription": "Find target accounts and likely buyers from observable market signals.",
-    "longDescription": "Turn an offer and premise into explicit research signals, find companies showing public evidence that the problem is live, and identify the smallest credible buyer set for each account.",
+    "shortDescription": "Find sourced signals and relevant people, with separate company fit and minimal person research.",
+    "longDescription": "Check external evidence and company criteria, then identify people who may know about the situation. Preserve uncertainty and sources.",
     "developerName": "William Flanagan",
     "category": "Sales",
     "capabilities": [
       "Read"
     ],
     "defaultPrompt": [
-      "Turn this offer into premise, signals, target companies, and likely buyers.",
-      "Find companies showing public evidence that this problem is live.",
-      "Rank the best-fit accounts and identify the smallest credible buyer set."
+      "Research this experiment using public sources and identify relevant people."
     ],
     "brandColor": "#0F766E"
   }

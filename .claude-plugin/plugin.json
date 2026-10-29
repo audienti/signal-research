@@ -1,7 +1,7 @@
 {
   "name": "signal-prospect-research",
-  "description": "Turn an outbound idea into ranked target companies and likely buyers.",
-  "version": "0.1.0",
+  "description": "Find sourced signals and relevant people, with separate company fit and minimal person research.",
+  "version": "0.4.0",
   "author": {
     "name": "William Flanagan",
     "email": "wflanagan@audienti.com"

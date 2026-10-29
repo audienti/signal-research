@@ -4,7 +4,7 @@ Use the strongest live tool path that exists in the current run. Do not claim ac
 
 ## 1) Unipile account discovery
 
-Use this first when `mcp__unipile` is available.
+Use only when `mcp__unipile` is available, authorized and needed. Public research is sufficient when it answers the question.
 
 Goal:
 
@@ -35,7 +35,7 @@ If the endpoint returns `errors/no_client_session`, do not assume the default Un
 
 ## 2) Unipile Sales Navigator people search
 
-Use when you already know the company and want likely buyers.
+Use when you already know the company and want relevant people.
 
 Request shape:
 
@@ -107,7 +107,7 @@ Use when you need clean LinkedIn URLs fast.
 - One person: `profile_search`
 - Two or more confirmed profile URLs: `bulk_profile_scraper`
 
-Use `bulk_*` when the URL list is already known. Do not waste calls one by one.
+Use bulk calls only when the authorized enrichment need justifies them. Known URLs alone do not require scraping.
 
 ## 5) Native web research
 
@@ -131,6 +131,6 @@ Good search shapes:
 
 ## 6) Fallback rules
 
-- If Unipile is present but blocked, keep going with web plus Icypeas.
+- If Unipile is present but blocked, continue with public web evidence where useful. Use Icypeas only if available and authorized.
 - If LinkedIn identity is uncertain, do not pretend profile data is verified.
 - If company evidence is weak, stop before stakeholder bloat.

@@ -1,160 +1,35 @@
 ---
 name: signal-prospect-research
-description: Turn an offer premise and signal questions into a ranked company-and-buyer target list. Use when the user asks to find companies with externally verifiable problems, identify the best-fit people at those companies, run LinkedIn or Sales Navigator research through available tools, and return evidence-backed prospects with sources.
+description: Find prospects by researching sourced Boolean company or person signals, combining questions with AND or OR, filtering by company name, website or LinkedIn company URL, and verifying company and role fit. Runs with native agent search and browsing; optionally uses available credit-funded research tools. Use for signal-based prospect discovery, monitoring and research, including hiring, leadership changes and other business events.
 ---
 
-# Signal Prospect Research
+# Signal prospect research
 
-## Goal
+Run the research yourself using the tools available to this agent. This package needs no application server, database, Exora account, API key or mandatory provider. Its output can be consumed by any application. Research does not authorize outreach or external record writes.
 
-- Turn a vague outbound idea into a tight research contract: offer -> premise -> signals -> companies -> people.
-- Find companies showing real external evidence that the premise is live.
-- Pick the smallest credible stakeholder set, starting with the most likely owner.
+## Start or resume
 
-## Default stance
+Read the caller's brief and existing run directory. Preserve the full offer, company criteria, role criteria and exclusions. Establish the topic, Boolean questions, same-target scope, AND/OR, event windows, company filters, desired prospect count, people-per-company limit and tool/spend constraints. Use explicit user settings; if absent, use OR, five people per company and native tools with no paid calls. State these defaults in the run. Ask only for a missing decision that actually prevents research.
 
-- This skill is read-only by default. Do not write to Exo unless the user explicitly asks for writeback.
-- Do not invent signal matches, buyer ownership, or recency.
-- Prefer a short ranked list with strong evidence over a big weak list.
+Create `run.json` from [the run contract](references/run-contract.md) in a caller-owned directory. Resolve relative paths against this skill directory for helpers and against the run directory for evidence. Never require files from the author's checkout. Keep unfinished work in the run ledger so another agent can continue it.
 
-## Inputs to ask for if missing
+Use [tool routing](references/tool-routing.md) to choose native, credits, or hybrid execution. Available platform credit tools are valid execution tools, not a requirement to build this logic into the application. Discover their actual schemas; never invent a tool name or require provider keys when the platform handles credentials. Keep mode and acquisition costs on every call and evidence record.
 
-- What is the offer or product being sold.
-- What is the premise. Use one sentence starting with "This offer matters when..."
-- What titles, role families, or buyer functions matter most.
-- How many companies and how many people per company are needed.
-- Geography, industry, size, or stage constraints.
+## Execute the pipeline
 
-If the user gives a loose explanation instead of structured inputs, normalize it yourself before researching.
+1. **Resolve company filters.** A supplied name, website URL or LinkedIn company URL seeds a bounded company universe. Resolve it to the official domain and exact company identity using primary links. Multiple filters form a union; this universe restriction is ANDed with signal results. Preserve regional domains and parent/subsidiary distinctions; uncertain equivalence is unresolved, not a different-company verdict. An ambiguous name needs disambiguation. With no filters, discover companies from the questions and full brief. Collect company identities and proof URLs first, before searching for people.
+2. **Research each company's signals and fit.** Reuse already opened, still-current evidence. For each question, collect decisive evidence, counterevidence, event time, observation time and source relation. Evaluate all required questions on that same target. For person-scoped questions, discover exact people, evaluate each person's questions separately, and verify that person's employer and company fit. Never pool different people's evidence for AND.
+3. **Use the appropriate retrieval ladder.** For hiring: official careers page → employer-linked ATS board → individual vacancy → structured data embedded in public HTML. A web reader returning a JavaScript shell is an extraction failure, not an empty careers page. If public HTTP is available, run `python3 scripts/read_public_page.py URL --out RUN/evidence/unique-name.json`; it saves the HTML alongside its extraction. Otherwise use the agent's browser/page tools. Verify ATS ownership from the official employer link; schema organization names alone are insufficient. For other questions: official announcement/newsroom/filing → reliable reporting → focused source search. Credit tools can supply missing company, job or profile data under the same evidence rules.
+4. **Evaluate current state separately from dated events.** A live official vacancy with an active application path, matching employer and no closure/expiry evidence can support “currently hiring” even if posted earlier. A current company team page or live employer page explicitly naming and linking a colleague can support current employment; the personal profile need not open when no fact is attributed to it. A recently fetched historical announcement is not current employment. Date-limited events require the actual event date within the window. Never substitute retrieval time for event time. A stale/closed vacancy cannot establish current hiring. Extraction alone does not prove a vacancy is still open: inspect the page/application state and conflicts.
+   The extractor preserves `datePosted`, `validThrough`, `descriptionLinks` and, for an exactly bound Ashby posting, `listingState.isListed` and `applicationDeadline`. `isListed: true` with no expired deadline supports availability; false or an expired deadline/validThrough is closure counterevidence, while missing state is unbound/unknown. An `href="#"` Apply link alone proves no working application; inspect its form or employer-bound embedded application. Always inspect dates against the run's as-of time; the extractor deliberately does not classify them.
+5. **Find people only for viable companies.** Search exact company identity plus each configured role family, including equivalent titles and explicit exclusions. Use official team pages, employer job descriptions naming colleagues, public biographies and exact linked profiles. In credits/hybrid mode, use company-and-role-scoped people search followed by necessary profile enrichment. Avoid indiscriminate employee dumps. Verify current employment and actual role against the caller's criteria, not an example-title substring. Do not target the newly hired executive when the brief asks for operators at that company.
+6. **Qualify and deduplicate.** Record each company and role criterion as met/not_met/unknown with evidence; retain contrary evidence. Only qualify when company fit, role fit, current employment, company filters and the Boolean signal result all pass. Unknown is needs_evidence, not a known no-fit. Stable profile URLs or source-bound provider IDs identify people; names alone do not. Use explicit source-backed aliases for opaque/vanity IDs. If the prior index is incomplete or aliases unresolved, report novelty unknown. Separate people newly found at known companies from new companies.
+7. **Continue pending work.** Queue the next concrete action per company/person: resolve identity, inspect source, check fit, verify another signal, search another role, or corroborate employment. A failed tool call does not consume the candidate as a negative. Change retrieval mechanism after a repeated extraction failure. Work until the requested count, agreed budget/time limit, or documented source exhaustion; preserve unfinished actions. Do not stop because one query batch ended. Return qualified prospects plus pending/rejected records, sources, costs and coverage limitations.
 
-## Core model
+## Boolean evidence and output
 
-Use this exact reasoning sequence:
+Answers are `true`, `false` or `null` (unknown). False requires explicit evidence addressing the question; missing search results, a tool failure or one closed job among unknown openings cannot establish a broad negative. AND is true only if all questions are true; OR is true if any is true. Preserve unknown answers and individual source records even when the combined answer is known.
 
-1. `offer`
-   - What is being sold.
-2. `premise`
-   - The prediction about when the offer matters.
-3. `signals`
-   - Externally checkable questions that would make the premise more likely true.
-4. `company matches`
-   - Specific companies with evidence that one or more signals are live.
-5. `people`
-   - The smallest credible buyer set at each matched company.
+Read [the run contract](references/run-contract.md) for the complete JSON shape and optional deterministic checker. The checker validates structure and combines the agent's sourced judgments; it cannot certify that a quote proves a claim. Inspect the actual saved evidence, question and target before setting an answer. Preserve source provenance even for credit-tool responses.
 
-Use the signal shape in `references/signal-shape.md`.
-
-## Workflow
-
-### 1) Normalize the request into signal objects
-
-For each signal, define:
-
-- `name`
-- `question`
-- `scope`: `company`, `person`, or `both`
-- `why_it_matters`
-- `match_rule`
-- `observation_methods`
-
-Do not start searching until the signals are clear enough that two different agents would look for roughly the same evidence.
-
-### 2) Resolve the live tool surface
-
-Check what you can actually use in this run.
-
-- If `mcp__unipile` is available, use it for LinkedIn account discovery and LinkedIn or Sales Navigator search.
-- If `mcp__icypeas` is available, use it for LinkedIn company URL discovery, profile URL discovery, and bulk scraping.
-- Use native web research for company-site, news, hiring, trust-center, funding, product, and public-social evidence.
-- If the user explicitly wants Sales Navigator page inspection and a browser connector is available, use the native browser or Chrome path that is actually present. Do not fake direct Sales Navigator access from plain web search.
-
-Use the examples in `references/tool-recipes.md`.
-
-### 3) Run the company research loop
-
-For each candidate company, work in this order:
-
-1. Company site
-2. News or web
-3. LinkedIn company identity
-4. Sales Navigator or LinkedIn search if needed
-
-Keep only signal matches you would actually use in outreach. Drop weak decorative findings.
-
-A usable company match needs:
-
-- company name
-- domain
-- LinkedIn company URL if available
-- 1 to 3 strong signal matches
-- source URLs
-- observed dates when available
-- confidence: `high`, `moderate`, `low`, or `unknown`
-
-### 4) Pick the buyer set
-
-Start with the most likely primary owner, then add only the strongest adjacent operator, sponsor, evaluator, or blocker when it strengthens the case.
-
-Selection rules:
-
-- Tie each person back to the premise or a specific signal.
-- Title alone is not enough.
-- Prefer the smallest credible set.
-- If the company fit is good but the buyer fit is weak, say so directly.
-
-### 5) Verify each person
-
-For each selected person, get:
-
-- full name
-- current title
-- LinkedIn profile URL
-- why they are relevant
-- what evidence supports the fit
-- confidence
-
-If there are 2 or more confirmed LinkedIn profile URLs, prefer bulk scraping over one-by-one scraping.
-
-### 6) Return a ranked output
-
-Use `references/output-template.md`.
-
-Default output shape:
-
-- short thesis
-- ranked companies
-- per-company signal evidence
-- selected people
-- confidence and gaps
-- follow-up search ideas only where evidence is still incomplete
-
-## Research rules
-
-- Company evidence comes before people hunting.
-- Recent evidence beats evergreen theory.
-- External verification beats category stereotypes.
-- Do not present inferred issues as confirmed facts.
-- Keep company-level and person-level signals distinct.
-- If you cannot verify a company signal, do not smuggle it in through a person title.
-- If no strong matches exist, say the motion is weak instead of padding the list.
-
-## Deliverable format
-
-Default: markdown in chat using the template in `references/output-template.md`.
-
-If the user asks for machine-readable output, return JSON with these top-level keys:
-
-- `offer`
-- `premise`
-- `signals`
-- `companies`
-- `summary`
-- `gaps`
-
-## Done when
-
-- The premise is explicit.
-- The signals are explicit and externally checkable.
-- The companies are ranked by evidence strength, not by filler quantity.
-- Each selected person has a real reason to be there.
-- Every non-obvious claim is backed by a source or labeled as an inference.
+For repeated improvement, change a concrete pipeline behavior, freeze the brief/criteria, and compare the previous and changed procedure on the same cases. Record intermediate retrieval coverage separately from qualified-person yield. Never present more extracted jobs, historical V10 saves or relaxed criteria as improved prospect performance.
