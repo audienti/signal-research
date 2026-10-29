@@ -5,7 +5,7 @@ Use the workspace's records when authorized. Otherwise return a concise Markdown
 ## Structured form
 
 For another agent or CRM integration, return JSON with `schemaVersion: 1`,
-`skill: {id: "signal-prospect-research", version: "0.3.1"}`, `briefRef` (caller
+`skill: {id: "signal-prospect-research", version: "0.4.0"}`, `briefRef` (caller
 reference or null), `status` (`completed`, `partial` or `blocked`), `companies`,
 `people`, `sourcesChecked`, `gaps` and `nextAction`. The company and person objects
 carry the evidence described below, with local references for relationships.

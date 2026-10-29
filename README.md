@@ -15,8 +15,9 @@ current employment and evidence-backed identity. The deterministic evaluator and
 source audit check structure, binding and quote presence; the agent must judge
 whether evidence actually supports a claim. Unknown evidence is not false.
 
-The legacy score helpers and references remain available for existing consumers.
-They use their existing contract and are not substitutes for the new Boolean run
+The legacy score helpers and references are retained from the author’s unpublished
+local lineage and are first published in this release.
+They use their separate contract and are not substitutes for the new Boolean run
 evaluator. The skill’s linked run contract is the guide for new research.
 
 Validation:
