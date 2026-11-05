@@ -1,7 +1,7 @@
 {
   "name": "signal-prospect-research",
   "description": "Find sourced signals and relevant people, with separate company fit and minimal person research.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": {
     "name": "William Flanagan",
     "email": "wflanagan@audienti.com"
