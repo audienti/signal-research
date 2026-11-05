@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 — 2026-11-05
+
+- Add web-only research guidance: confirm contacts on a fetched page, find missing titles on leadership or investor relations pages, and use a feed mirror when a wire service blocks fetches.
+
 ## 0.4.0 — 2026-10-29
 
 - Publish reviewed portable Boolean signal research, scoped company/role qualification and native-first tool routing.
